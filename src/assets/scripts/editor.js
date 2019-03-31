@@ -10,8 +10,8 @@ var app = new Vue({
       currentEditorTheme: 'base16-light',
       editor: null,
       builtinFonts: [
-        { label: '衬线', value: 'serif', fonts: "Optima-Regular, Optima, PingFangSC-light, PingFangTC-light, 'PingFang SC', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"},
-        { label: '无衬线', value: 'sans-serif', fonts: "Roboto, Oxygen, Ubuntu, Cantarell, PingFangSC-light, PingFangTC-light, 'Open Sans', 'Helvetica Neue', sans-serif"}
+        { label: '衬线', value: 'serif', fonts: "Optima-Regular, Optima, PingFangSC-light, PingFangTC-light, 'PingFang SC', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif" },
+        { label: '无衬线', value: 'sans-serif', fonts: "Roboto, Oxygen, Ubuntu, Cantarell, PingFangSC-light, PingFangTC-light, 'Open Sans', 'Helvetica Neue', sans-serif" }
       ],
       currentFont: {
         label: '', value: ''
@@ -19,16 +19,17 @@ var app = new Vue({
       aboutDialogVisible: false
     }
   },
-  mounted () {
+  mounted() {
     var self = this
     this.editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
       lineNumbers: false,
       lineWrapping: true,
       styleActiveLine: true,
       theme: this.currentEditorTheme,
+      autoRefresh: true,
       mode: 'text/x-markdown',
     });
-    this.editor.on("change", function(cm, change) {
+    this.editor.on("change", function (cm, change) {
       self.refresh()
     })
     this.currentFont = this.builtinFonts[0]
@@ -66,11 +67,11 @@ var app = new Vue({
     copy: function () {
       var clipboardDiv = document.getElementById('output')
       clipboardDiv.focus();
-      window.getSelection().removeAllRanges();  
-      var range = document.createRange(); 
+      window.getSelection().removeAllRanges();
+      var range = document.createRange();
       range.setStartBefore(clipboardDiv.firstChild);
       range.setEndAfter(clipboardDiv.lastChild);
-      window.getSelection().addRange(range);  
+      window.getSelection().addRange(range);
 
       try {
         if (document.execCommand('copy')) {
